@@ -1,4 +1,5 @@
 from task import Task
+from datetime import datetime
 
 def get_task():
     try:    
@@ -18,7 +19,7 @@ def get_task():
         raw_date = input("Enter task date & time(format= d-m-y H:M:S am/pm): ").strip()
         if not raw_date:
             raise ValueError("Date Time cannot be empty.")
-        t_dt = raw_date
+        t_dt = datetime.strptime(raw_date, "%d-%m-%Y %I:%M:%S %p")
 
         return Task(t_no, t, a_info, t_dt)
     except ValueError as e:

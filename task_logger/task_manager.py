@@ -73,9 +73,9 @@ class TaskManager:
                 for row in reader:
                     if task_id is not None and row[0] == str(task_id):
                         results.append(row)
-                    elif task is not None and row[1] == str(task):
+                    elif task is not None and row[1].strip().lower() == str(task).strip().lower():
                         results.append(row)
-                    elif info is not None and row[2] == str(info):
+                    elif info is not None and row[2].strip().lower() == str(info).strip().lower():
                         results.append(row)
                     elif task_datetime is not None and row[3] == str(task_datetime):
                         results.append(row)
