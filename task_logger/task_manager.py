@@ -1,4 +1,5 @@
 from task import Task
+from datetime import datetime
 import csv
 import os
 
@@ -77,8 +78,19 @@ class TaskManager:
                         results.append(row)
                     elif info is not None and row[2].strip().lower() == str(info).strip().lower():
                         results.append(row)
-                    elif task_datetime is not None and row[3] == str(task_datetime):
-                        results.append(row)
+                    elif task_datetime is not None:                        
+                        try:
+                            # full date time parse from csv
+                            row_datetime = datetime.strptime(row[3], "%d-%m-%Y %I:%M:%S %p")
+                            # only date parse from user input
+                            search_date = datetime.strptime(task_datetime, "%d-%m-%Y").date()
+
+                            if row_datetime.date() == search_date:
+                                results.append(row)
+                        except ValueError as ve:
+                            # for debugging paring issue
+                            print(f"Date parse error: {ve}")
+
         except Exception:
             raise ValueError("Task is invalid.")
         
@@ -115,7 +127,7 @@ class TaskManager:
             writer = csv.writer(f)
             if not exists:
                 writer.writerow(["Task Id", "Task", "Info", "Date & Time"])
-            writer.writerow([task_id, task_name, task_info, date_time])
+            writer.writerow([task_id, task_name, task_info, date_time.strftime("%d-%m-%Y %I:%M:%S %p")])
             print("New task added successfully.")
 
 if __name__ == "__main__":

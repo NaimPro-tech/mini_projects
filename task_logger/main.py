@@ -29,9 +29,19 @@ try:
             print("Remove Successfully")
 
         elif choice == 3:
-            t_no = int(input("Enter task id to update: "))
-            t = str(input('Enter your task: '))
-            a_info = input("Enter Additional information: ")
+            t_no = input("Enter task id to update: ").strip()
+            if not t_no:
+                print("Please enter a task no to update.")
+            t_no = int(t_no)
+
+            t = str(input('Enter your task: ')).strip()
+            if not t:
+                print("Skipped task.")
+            
+            a_info = input("Enter Additional information: ").strip()
+            if not a_info:
+                print("Skipped additional information.")
+                
             t_dt = input("Enter date & time(format= d-m-y H:M:S am/pm): ")
             
             if t_dt.strip():
@@ -92,8 +102,8 @@ try:
             break
         else:
             print("Invalid Input. Please Try again")
-except Exception:
-    raise ValueError("Invalid Option")
+except Exception as e:
+    print(f"Error: {e}")
 
 finally:
     print("Thanks for using our system.")
